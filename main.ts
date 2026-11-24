@@ -46,6 +46,11 @@ if (note.length < 1 || note.length > 160) {
 if (note.trim().length === 0 || /[\r\n]/.test(note)) {
   throw new Error("entry note must be one non-blank line");
 }
+// A release note states a fix that shipped: it ends with a full
+// stop, not a dangling clause.
+if (!note.endsWith(".")) {
+  throw new Error("entry note must end with a full stop");
+}
 
 const dst = join(outDir, "entry.txt");
 mkdirSync(outDir, { recursive: true });
